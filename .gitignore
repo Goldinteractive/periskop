@@ -42,11 +42,11 @@ cache
 build
 
 # Ignore all the vendor because they will be downloaded using bower
-public/assets/vendor/bower
+src/assets/vendor/bower
 
 # ignore the distribution folder
 dist
 .tmp
 
 # the style.css must be generated using 'compass compile'
-public/assets/css/style.css
+src/assets/css/style.css
