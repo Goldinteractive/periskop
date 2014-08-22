@@ -77,6 +77,12 @@ textarea {
     resize: vertical;
 }
 
+html,body {
+    position: relative;
+    overflow: hidden;
+    @include square(100%);
+}
+
 /* ==========================================================================
    Browse Happy prompt
    ========================================================================== */
@@ -103,6 +109,26 @@ a {
         width:100%;
     }
 }
+
+.slider,.slider-container,.slide {
+    position: absolute;
+    top:0;
+    left:0;
+    padding: 0;
+    margin: 0;
+    display: block;
+    overflow: hidden;
+    @include square(100%);
+}
+.slide {
+    opacity:0;
+    @include transition(opacity 0.3s);
+    &.active {
+        opacity: 1;
+    }
+}
+
+
 
 
 
