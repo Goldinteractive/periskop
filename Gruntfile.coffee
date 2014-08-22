@@ -8,7 +8,6 @@ module.exports = (grunt) ->
       ]
     pkg: grunt.file.readJSON("package.json")
     now: new Date().getTime()
-    secret: grunt.file.readJSON(".ftppass")
   )
 
   grunt.initConfig tasks
@@ -17,7 +16,6 @@ module.exports = (grunt) ->
   grunt.registerTask "default", [
     "jshint"
     "clean"
-    "grunticon"
     "compass"
     "copy"
     "requirejs"

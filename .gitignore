@@ -37,6 +37,9 @@ publish
 .idea
 node_modules
 .sass-cache
+# node webkit folders
+cache
+build
 
 # Ignore all the vendor because they will be downloaded using bower
 public/assets/vendor/bower

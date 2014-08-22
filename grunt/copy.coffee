@@ -2,18 +2,16 @@ module.exports = main:
   files: [
     {
       expand: true
-      cwd: "public/assets"
+      cwd: "src/assets"
       src: [
         "css/**"
-        "img/**"
-        "vendor/**"
-        "!vendor/bower"
       ]
-      dest: "dist/public/assets"
+      dest: "dist/assets"
     }
     {
+      cwd: "src/"
       expand: true
-      src: ["*.!(json|rb|md|js)"]
+      src: ["*.!(json|rb|md|js|coffee)"]
       dest: "dist"
       filter: "isFile"
     }

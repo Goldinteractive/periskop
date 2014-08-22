@@ -4,7 +4,7 @@ module.exports = (grunt, options) ->
     app_name: options.pkg.name
     app_version: options.pkg.version
     build_dir: 'build', # Where the build version of my node-webkit app is saved
-    credits: 'public/credits.html'
+    credits: 'src/credits.html'
     mac: true, # We want to build it for mac
     win: false, # We want to build it for win
     linux32: false, # We don't need linux32
@@ -13,5 +13,5 @@ module.exports = (grunt, options) ->
   src: [
     'package.json'
     'dist/index.html'
-    'dist/public/**'
+    'dist/assets/**'
   ]

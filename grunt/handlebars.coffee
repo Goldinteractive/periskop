@@ -3,4 +3,4 @@ module.exports = compile:
     namespace: "JST"
 
   files:
-    "public/assets/js/compiled-templates/templates.js": ["public/assets/js/**/**/*.hbs"]
+    "src/assets/js/compiled-templates/templates.js": ["src/assets/js/**/**/*.hbs"]

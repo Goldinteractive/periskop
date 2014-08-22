@@ -1,12 +1,12 @@
 module.exports =
   js:
-    files: ["public/assets/js/**/*.js"]
+    files: ["src/assets/js/**/*.js"]
     tasks: ["jshint"]
 
   tpl:
-    files: ["public/assets/js/**/**/*.hbs"]
+    files: ["src/assets/js/**/**/*.hbs"]
     tasks: ["handlebars"]
 
   css:
-    files: ["public/assets/scss/**/*.scss"]
+    files: ["src/assets/scss/**/*.scss"]
     tasks: ["compass"]
