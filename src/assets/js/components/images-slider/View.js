@@ -7,6 +7,7 @@ define([
     tagName: 'ul',
     className: 'slider',
     delay: 5,
+    initialized: false,
     afterRender: function() {
       _.bindAll(this);
       this.listenTo(this.collection, 'add', this.addSlide);
@@ -17,8 +18,9 @@ define([
       this.stopTimer();
       // let it sleep
       while (new Date().getSeconds() % this.delay !== 0) {
-        console.log('sleep');
+        //console.log('sleep');
       }
+      this.initialized = true;
       this.nextTick();
     },
     nextTick: function() {
@@ -27,6 +29,7 @@ define([
     },
     stopTimer: function() {
       window.clearTimeout(this.timer);
+      this.timer = false;
     },
     /**
      * Triggered anytime new slides get added to the carousel
@@ -40,6 +43,10 @@ define([
         modelCid: imageModel.cid,
         model: imageModel
       })).render();
+
+      if (this.initialized && !this.timer) {
+        this.nextTick();
+      }
     },
     showNextSlide: function() {
       console.log('show next');
@@ -60,8 +67,9 @@ define([
         $nextSlide.addClass('active');
         this.removeOldSlide($activeSlide);
         this.nextTick();
-      } else {}
-
+      } else {
+        this.stopTimer();
+      }
 
     },
     onCollectionSync: function() {
@@ -70,11 +78,14 @@ define([
     },
     removeOldSlide: function($oldSlide) {
       var _this = this;
-      // setTimeout(function() {
-      //   _this.getView({
-      //     modelCid: $oldSlide.data().modelCid
-      //   }).remove();
-      // }, 1000);
+      setTimeout(function() {
+        var subview = _this.getView({
+          modelCid: $oldSlide.data().modelCid
+        });
+        subview.remove();
+        _this.collection.remove(subview.model);
+
+      }, 1000);
     }
   });
 });

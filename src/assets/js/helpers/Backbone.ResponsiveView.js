@@ -24,10 +24,9 @@ define([
       return originalRender.apply(this, arguments);
     },
     // override the backbone.layout default remove function
-    remove: function() {
+    cleanup: function() {
       $window.off('.' + this.cid);
       $document.off('.' + this.cid);
-      return originalRemove.apply(this, arguments);
     },
     onResize: $.noop
   });

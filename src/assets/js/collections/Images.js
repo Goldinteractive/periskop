@@ -32,8 +32,16 @@ define(['models/Image', 'backbone'], function(ImageModel) {
         };
         connection.onmessage = function(e) {
           var data = parseMessage(JSON.parse(e.data), _this.socketChannel);
+
           if (data) {
-            options.success(data);
+            // On the first init we just fetch all the images
+            if (!socketOpened) {
+              options.success(data);
+            } else {
+              // on the other messages we keep adding the new images to the collection
+              _this.add(data);
+            }
+            socketOpened = true;
           }
         };
         connection.onerror = function(e) {
