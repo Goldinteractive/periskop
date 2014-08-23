@@ -11,7 +11,7 @@ define([
     afterRender: function() {
       _.bindAll(this);
       this.listenTo(this.collection, 'add', this.addSlide);
-      this.onCollectionSync();
+      this.collection.each(this.addSlide, this);
       this.startTimer();
     },
     startTimer: function() {
@@ -72,19 +72,14 @@ define([
       }
 
     },
-    onCollectionSync: function() {
-      this.collection.each(this.addSlide, this);
-
-    },
     removeOldSlide: function($oldSlide) {
-      var _this = this;
-      setTimeout(function() {
-        var subview = _this.getView({
+      var _this = this,
+        subview = _this.getView({
           modelCid: $oldSlide.data().modelCid
         });
+      setTimeout(function() {
         subview.remove();
         _this.collection.remove(subview.model);
-
       }, 1000);
     }
   });

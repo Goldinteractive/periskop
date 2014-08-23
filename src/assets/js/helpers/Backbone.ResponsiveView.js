@@ -11,7 +11,6 @@ define([
   var $document = $(document),
     nwWindow = window.gui ? gui.Window.get() : null,
     $window = $(window),
-    originalRemove = Backbone.Layout.prototype.remove,
     originalRender = Backbone.Layout.prototype._render;
 
   Backbone.ResponsiveView = Backbone.Layout.extend({
@@ -23,7 +22,7 @@ define([
       });
       return originalRender.apply(this, arguments);
     },
-    // override the backbone.layout default remove function
+    // override the backbone.layout default cleanup function
     cleanup: function() {
       $window.off('.' + this.cid);
       $document.off('.' + this.cid);
