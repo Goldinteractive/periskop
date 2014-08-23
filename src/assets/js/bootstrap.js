@@ -9,6 +9,11 @@ require([
   'layoutmanager',
   'compiled-templates'
 ], function() {
+  $.ajaxSetup({
+    data: {
+      hash: '_' + ~~(new Date().getMilliseconds() * Math.random() * 100) + ~~(new Date().getMilliseconds() * Math.random() * 100)
+    }
+  });
   // Configure LayoutManager with Backbone Boilerplate defaults.
   Backbone.Layout.configure({
     // Allow LayoutManager to augment Backbone.View.prototype.

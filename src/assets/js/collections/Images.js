@@ -4,13 +4,13 @@ define(['models/Image', 'backbone'], function(ImageModel) {
     url: 'http://www.goldinteractive.ch/party/api/images/latest',
     // url: 'assets/json-data/images.json',
     pollingDelay: 10, // seconds
-    needsToBeSync: false,
+    needsToBeSync: true,
     /**
      * Fetch initially all the images
      */
     initialize: function() {
       _.bindAll(this);
-      this.fetch();
+
       this.initPollingLoop();
     },
     sync: function(method, model, options) {
@@ -29,9 +29,7 @@ define(['models/Image', 'backbone'], function(ImageModel) {
     poll: function() {
       // Keep it in sync with the device clock
       if (new Date().getSeconds() % this.pollingDelay === 0 && this.needsToBeSync) {
-        this.fetch({
-
-        });
+        this.fetch();
       }
     },
     /**
