@@ -6,7 +6,7 @@ define([
   return Backbone.View.extend({
     tagName: 'ul',
     className: 'slider',
-    pollingDelay: 3, // seconds
+    delay: 5,
     afterRender: function() {
       _.bindAll(this);
       this.listenTo(this.collection, 'add', this.addSlide);
@@ -15,10 +15,18 @@ define([
     },
     startTimer: function() {
       this.stopTimer();
-      this.timer = window.setInterval(this.showNextSlide, 1000);
+      // let it sleep
+      while (new Date().getSeconds() % this.delay !== 0) {
+        console.log('sleep');
+      }
+      this.nextTick();
+    },
+    nextTick: function() {
+      console.log(new Date().getSeconds(), new Date().getMilliseconds());
+      this.timer = window.setTimeout(this.showNextSlide, this.delay * 1000 - new Date().getMilliseconds());
     },
     stopTimer: function() {
-      window.clearInterval(this.timer);
+      window.clearTimeout(this.timer);
     },
     /**
      * Triggered anytime new slides get added to the carousel
@@ -34,13 +42,14 @@ define([
       })).render();
     },
     showNextSlide: function() {
+      console.log('show next');
 
-      if (new Date().getSeconds() % this.pollingDelay === 0) return;
       var $activeSlide = this.$('.slide.active'),
         $nextSlide;
 
       if (!$activeSlide.length) {
         $activeSlide = this.$('.slide:first').addClass('active');
+        this.nextTick();
         return;
       }
 
@@ -49,11 +58,9 @@ define([
       if ($nextSlide.length) {
         $activeSlide.removeClass('active');
         $nextSlide.addClass('active');
-        this.collection.needsToBeSync = false;
         this.removeOldSlide($activeSlide);
-      } else {
-        this.collection.needsToBeSync = true;
-      }
+        this.nextTick();
+      } else {}
 
 
     },
