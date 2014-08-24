@@ -18,12 +18,12 @@ define([
       this.stopTimer();
       this.initialized = true;
       // sync the timer
-      this.nextTick(this.delay - new Date().getSeconds() % this.delay);
+      this.nextTick();
     },
-    nextTick: function(delay) {
+    nextTick: function() {
       console.log(new Date().getSeconds(), new Date().getMilliseconds());
 
-      this.timer = window.setTimeout(this.showNextSlide, ((delay || this.delay) * 1000) - new Date().getMilliseconds());
+      this.timer = window.setTimeout(this.showNextSlide, ((this.delay - new Date().getSeconds() % this.delay) * 1000) - new Date().getMilliseconds());
     },
     stopTimer: function() {
       window.clearTimeout(this.timer);
