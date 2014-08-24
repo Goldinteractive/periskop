@@ -14,6 +14,7 @@ define(['models/Image', 'backbone'], function(ImageModel) {
   return Backbone.Collection.extend({
     model: ImageModel,
     socketChannel: 'stream',
+    connection: connection,
     /**
      * Fetch initially all the images
      */

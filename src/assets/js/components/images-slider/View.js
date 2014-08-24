@@ -16,20 +16,26 @@ define([
     },
     startTimer: function() {
       this.stopTimer();
-      // let it sleep
-      while (new Date().getSeconds() % this.delay !== 0) {
-        //console.log('sleep');
-      }
       this.initialized = true;
-      this.nextTick();
+      // sync the timer
+      this.nextTick(this.delay - new Date().getSeconds() % this.delay);
     },
-    nextTick: function() {
+    nextTick: function(delay) {
       console.log(new Date().getSeconds(), new Date().getMilliseconds());
-      this.timer = window.setTimeout(this.showNextSlide, this.delay * 1000 - new Date().getMilliseconds());
+
+      this.timer = window.setTimeout(this.showNextSlide, ((delay || this.delay) * 1000) - new Date().getMilliseconds());
     },
     stopTimer: function() {
       window.clearTimeout(this.timer);
       this.timer = false;
+    },
+    insert: function($root, $el) {
+      var $activeSLide = this.$('.slide.active');
+      if ($activeSLide.length) {
+        $activeSLide.after($el);
+      } else {
+        $root.append($el);
+      }
     },
     /**
      * Triggered anytime new slides get added to the carousel
@@ -68,6 +74,9 @@ define([
         this.removeOldSlide($activeSlide);
         this.nextTick();
       } else {
+        this.collection.connection.send(JSON.stringify([2, 'periskop', this.collection.socketChannel, {
+          'action': 'givememore'
+        }]));
         this.stopTimer();
       }
 
