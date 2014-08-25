@@ -74,10 +74,8 @@ define([
         this.removeOldSlide($activeSlide);
         this.nextTick();
       } else {
-        this.collection.connection.send(JSON.stringify([2, 'periskop', this.collection.socketChannel, {
-          'action': 'givememore'
-        }]));
         this.stopTimer();
+        this.collection.giveMeMore();
       }
 
     },

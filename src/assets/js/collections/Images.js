@@ -25,6 +25,11 @@ define(['models/Image', 'backbone'], function(ImageModel) {
     parse: function(data) {
       return data.existing_images;
     },
+    giveMeMore: function() {
+      this.connection.send(JSON.stringify([2, 'periskop', this.socketChannel, {
+        'action': 'givememore'
+      }]));
+    },
     sync: function(method, model, options) {
       var _this = this;
       if (!socketOpened) {
