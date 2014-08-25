@@ -1,43 +1,57 @@
 define(['models/Image', 'backbone'], function(ImageModel) {
+
+  /**
+   * Websocket private helpers
+   */
+  var connection = new WebSocket('ws://178.62.185.145:55555'),
+    socketOpened = false,
+    parseMessage = function(data, channelId) {
+      if (data[1] === channelId) {
+        return data[2];
+      }
+    };
+
   return Backbone.Collection.extend({
     model: ImageModel,
-    url: 'http://www.goldinteractive.ch/party/api/images/latest',
-    // url: 'assets/json-data/images.json',
-    pollingDelay: 10, // seconds
-    needsToBeSync: true,
+    socketChannel: 'stream',
+    connection: connection,
     /**
      * Fetch initially all the images
      */
     initialize: function() {
       _.bindAll(this);
-
-      this.initPollingLoop();
+      this.fetch();
+    },
+    parse: function(data) {
+      return data.existing_images;
     },
     sync: function(method, model, options) {
-      options.timeout = 10000;
-      options.dataType = 'jsonp';
-      return Backbone.sync(method, model, options);
-    },
-    /**
-     * Initialize the polling with the server
-     */
-    initPollingLoop: function() {
-      this.stopTimer();
-      this.timer = window.setInterval(this.poll, 1000);
-      return this;
-    },
-    poll: function() {
-      // Keep it in sync with the device clock
-      if (new Date().getSeconds() % this.pollingDelay === 0 && this.needsToBeSync) {
-        this.fetch();
+      var _this = this;
+      if (!socketOpened) {
+        connection.onopen = function() {
+          connection.send(JSON.stringify([5, _this.socketChannel]));
+        };
+        connection.onmessage = function(e) {
+          var data = parseMessage(JSON.parse(e.data), _this.socketChannel);
+
+          if (data) {
+            // On the first init we just fetch all the images
+            if (!socketOpened) {
+              options.success(data);
+            } else {
+              // on the other messages we keep adding the new images to the collection
+              _this.add(data);
+            }
+            socketOpened = true;
+          }
+        };
+        connection.onerror = function(e) {
+          alert('Oups an error occurred!');
+          console.log(e);
+        };
       }
-    },
-    /**
-     * Stop the polling timer
-     */
-    stopTimer: function() {
-      window.clearTimeout(this.timer);
-      return this;
+
     }
+
   });
 });

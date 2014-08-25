@@ -13,7 +13,7 @@ define([
       })
     },
     initialize: function() {
-      this.render();
+      this.listenTo(this.collection, 'sync', this.render);
     },
     onImagesSync: function() {}
   });

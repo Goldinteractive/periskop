@@ -80,6 +80,8 @@ textarea {
 html,body {
     position: relative;
     overflow: hidden;
+    background: black url('#{$imagePath}loader.gif') center center no-repeat;
+    background-size:32px;
     @include square(100%);
 }
 
@@ -122,10 +124,18 @@ a {
 }
 .slide {
     opacity:0;
-    @include transition(opacity 0.3s);
+    @include transition(opacity 0.5s);
     &.active {
         opacity: 1;
     }
+}
+
+h1 {
+    position: absolute;
+    z-index:999;
+    top:15px;
+    margin: 0;
+    left:20px;
 }
 
 

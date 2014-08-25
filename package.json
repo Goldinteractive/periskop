@@ -1,42 +1,42 @@
 {
-	"main": "dist/index.html",
-	"nodejs": false,
-	"window": {
-		"title": "periskop",
-		"show_in_taskbar": false,
-		"kiosk": true,
-		"resizable": false
-	},
-	"devDependencies": {
-		"amdclean": "^2.2.4",
-		"grunt": "^0.4.5",
-		"grunt-contrib-clean": "^0.6.0",
-		"grunt-contrib-compass": "^0.9.1",
-		"grunt-contrib-copy": "^0.5.0",
-		"grunt-contrib-handlebars": "^0.8.0",
-		"grunt-contrib-jshint": "^0.10.0",
-		"grunt-contrib-requirejs": "^0.4.4",
-		"grunt-contrib-uglify": "^0.5.1",
-		"grunt-contrib-watch": "^0.6.1",
-		"grunt-node-webkit-builder": "^0.2.2",
-		"grunt-processhtml": "^0.3.3",
-		"load-grunt-configs": "^0.4.0",
-		"load-grunt-tasks": "^0.6.0"
-	},
-	"scripts": {
-		"test": "grunt"
-	},
-	"name": "periskop",
-	"description": "Before you start dealing with this package please make sure to have the latest [nodejs](http://nodejs.org/) version installed on your machine",
-	"version": "0.0.1",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/Goldinteractive/periskop.git"
-	},
-	"author": "Gianluca Guarini <gianluca.guarini@gmail.com> (http://gianlucaguarini.com/)",
-	"license": "Mit",
-	"bugs": {
-		"url": "https://github.com/Goldinteractive/periskop/issues"
-	},
-	"homepage": "https://github.com/Goldinteractive/periskop"
+  "main": "dist/index.html",
+  "nodejs": false,
+  "window": {
+    "title": "periskop",
+    "show_in_taskbar": true,
+    "kiosk": true,
+    "resizable": true
+  },
+  "devDependencies": {
+    "amdclean": "^2.2.4",
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-compass": "^0.9.1",
+    "grunt-contrib-copy": "^0.5.0",
+    "grunt-contrib-handlebars": "^0.8.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-requirejs": "^0.4.4",
+    "grunt-contrib-uglify": "^0.5.1",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-node-webkit-builder": "^0.2.2",
+    "grunt-processhtml": "^0.3.3",
+    "load-grunt-configs": "^0.4.0",
+    "load-grunt-tasks": "^0.6.0"
+  },
+  "scripts": {
+    "test": "grunt"
+  },
+  "name": "periskop",
+  "description": "Before you start dealing with this package please make sure to have the latest [nodejs](http://nodejs.org/) version installed on your machine",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Goldinteractive/periskop.git"
+  },
+  "author": "Gianluca Guarini <gianluca.guarini@gmail.com> (http://gianlucaguarini.com/)",
+  "license": "Mit",
+  "bugs": {
+    "url": "https://github.com/Goldinteractive/periskop/issues"
+  },
+  "homepage": "https://github.com/Goldinteractive/periskop"
 }

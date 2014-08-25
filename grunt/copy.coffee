@@ -5,6 +5,7 @@ module.exports = main:
       cwd: "src/assets"
       src: [
         "css/**"
+        "img/*"
       ]
       dest: "dist/assets"
     }

@@ -6,19 +6,36 @@ define([
   return Backbone.View.extend({
     tagName: 'ul',
     className: 'slider',
-    pollingDelay: 3, // seconds
+    delay: 5,
+    initialized: false,
     afterRender: function() {
       _.bindAll(this);
       this.listenTo(this.collection, 'add', this.addSlide);
-      this.onCollectionSync();
+      this.collection.each(this.addSlide, this);
       this.startTimer();
     },
     startTimer: function() {
       this.stopTimer();
-      this.timer = window.setInterval(this.showNextSlide, 1000);
+      this.initialized = true;
+      // sync the timer
+      this.nextTick();
+    },
+    nextTick: function() {
+      console.log(new Date().getSeconds(), new Date().getMilliseconds());
+
+      this.timer = window.setTimeout(this.showNextSlide, ((this.delay - new Date().getSeconds() % this.delay) * 1000) - new Date().getMilliseconds());
     },
     stopTimer: function() {
-      window.clearInterval(this.timer);
+      window.clearTimeout(this.timer);
+      this.timer = false;
+    },
+    insert: function($root, $el) {
+      var $activeSLide = this.$('.slide.active');
+      if ($activeSLide.length) {
+        $activeSLide.after($el);
+      } else {
+        $root.append($el);
+      }
     },
     /**
      * Triggered anytime new slides get added to the carousel
@@ -32,15 +49,20 @@ define([
         modelCid: imageModel.cid,
         model: imageModel
       })).render();
+
+      if (this.initialized && !this.timer) {
+        this.nextTick();
+      }
     },
     showNextSlide: function() {
+      console.log('show next');
 
-      if (new Date().getSeconds() % this.pollingDelay === 0) return;
       var $activeSlide = this.$('.slide.active'),
         $nextSlide;
 
       if (!$activeSlide.length) {
         $activeSlide = this.$('.slide:first').addClass('active');
+        this.nextTick();
         return;
       }
 
@@ -49,25 +71,25 @@ define([
       if ($nextSlide.length) {
         $activeSlide.removeClass('active');
         $nextSlide.addClass('active');
-        this.collection.needsToBeSync = false;
         this.removeOldSlide($activeSlide);
+        this.nextTick();
       } else {
-        this.collection.needsToBeSync = true;
+        this.collection.connection.send(JSON.stringify([2, 'periskop', this.collection.socketChannel, {
+          'action': 'givememore'
+        }]));
+        this.stopTimer();
       }
-
-
-    },
-    onCollectionSync: function() {
-      this.collection.each(this.addSlide, this);
 
     },
     removeOldSlide: function($oldSlide) {
-      var _this = this;
-      // setTimeout(function() {
-      //   _this.getView({
-      //     modelCid: $oldSlide.data().modelCid
-      //   }).remove();
-      // }, 1000);
+      var _this = this,
+        subview = _this.getView({
+          modelCid: $oldSlide.data().modelCid
+        });
+      setTimeout(function() {
+        subview.remove();
+        _this.collection.remove(subview.model);
+      }, 1000);
     }
   });
 });
