@@ -150,10 +150,7 @@ h1 {
     background-image: url('#{$imagePath}bg-pattern.png');
     @include box-sizing(border-box);
 }
-form {
-    display: block;
-
-
+#boot-form {
     input {
         padding: 1em;
         background: $inputBg;
@@ -175,6 +172,11 @@ form {
     label {
         margin: 1em 0;
     }
+}
+
+.vex {
+    font-size: 0.5em;
+    line-height: 0.8em;
 }
 
 

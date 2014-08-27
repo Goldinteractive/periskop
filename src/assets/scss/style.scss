@@ -12,6 +12,9 @@
 // Core variables and mixins
 @import "include/variables"; // Modify this for custom colors, font-sizes, etc
 
+// third party sass files
+@import "../vendor/bower/vex/sass/vex";
+@import "../vendor/bower/vex/sass/vex-theme-flat-attack";
 
 // Font include
 @import "include/fonts";

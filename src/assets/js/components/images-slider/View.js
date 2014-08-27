@@ -37,21 +37,26 @@ define([
     showNextSlide: function() {
       console.log('show next');
 
+      window.clearTimeout(this.timer);
+
       var $activeSlide = this.$('.slide.in'),
         $nextSlide;
 
+
       if (!$activeSlide.length) {
         $activeSlide = this.$('.slide:first').addClass('in');
-        return;
-      }
+        this.timer = _.delay(this.removeOldSlide, 10000, $activeSlide);
+      } else {
 
-      $nextSlide = $activeSlide.next('li');
-      $activeSlide.removeClass('in').addClass('out');
+        $nextSlide = $activeSlide.next('li');
+        this.timer = _.delay(this.removeOldSlide, 10000, $nextSlide);
 
-      if ($nextSlide.length) {
-        $nextSlide.addClass('in');
+        if ($nextSlide.length) {
+          $nextSlide.addClass('in');
+        }
         this.removeOldSlide($activeSlide);
       }
+
 
     },
     /**
@@ -59,10 +64,15 @@ define([
      * @param  { Array } $oldSlide: jquery element object
      */
     removeOldSlide: function($oldSlide) {
+
+      if (!$oldSlide ||  !$oldSlide.length) return;
+
       var _this = this,
         subview = _this.getView({
           modelCid: $oldSlide.data().modelCid
         });
+
+      $oldSlide.removeClass('in').addClass('out');
       // remove the old image after the out animation is completed
       setTimeout(function() {
         subview.remove();

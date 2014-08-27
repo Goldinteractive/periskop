@@ -1,7 +1,8 @@
 define([
+  'helpers/helpers',
   'models/Image',
   'backbone'
-], function(ImageModel) {
+], function(helpers, ImageModel) {
 
   return Backbone.Collection.extend({
     model: ImageModel,
@@ -69,45 +70,50 @@ define([
      * @param  { Object } e
      */
     onSocketOpened: function(e) {
-      this.socketOpened = true;
-      if (window.app.CLIENT_ID) {
-        console.log('Client id= ' + window.app.CLIENT_ID);
+      setTimeout(_.bind(function() {
+        this.socketOpened = true;
+        if (window.app.CLIENT_ID) {
+          console.log('Client id= ' + window.app.CLIENT_ID);
 
-        this.sendAction('join', {
-          'number': window.app.CLIENT_ID
-        });
-        this.subscribe(this.socketChannel);
-        this.trigger('sync');
+          this.sendAction('join', {
+            'number': window.app.CLIENT_ID
+          });
+          this.subscribe(this.socketChannel);
+          this.trigger('sync');
 
-      } else {
-        console.warn('No client id');
-      }
+        } else {
+          console.warn('No client id');
+        }
+      }, this));
     },
     /**
      * One websocket message callback
      * @param  { Object } e
      */
     onSocketMessage: function(e) {
-      // detect the content of the message received
-      var data = this.parseMessage(JSON.parse(e.data), this.socketChannel);
-      // if the content is relevant
-      if (data) {
-        // we trigger some actions on the client
-        switch (data.action) {
-          case 'add':
-            this.add(data.image);
-            break;
-          default:
-            this.trigger(data.action);
+      setTimeout(_.bind(function() {
+        // detect the content of the message received
+        var data = this.parseMessage(JSON.parse(e.data), this.socketChannel);
+        // if the content is relevant
+        if (data) {
+          // we trigger some actions on the client
+          switch (data.action) {
+            case 'add':
+              this.add(data.image);
+              break;
+            default:
+              this.trigger(data.action);
+          }
         }
-      }
+      }, this));
+
     },
     /**
      * One websocket error or disconnection callback
      * @param  { Object } e
      */
     onSocketError: function(e) {
-      alert('Oups an error occurred!');
+      helpers.alert('Oups an error occurred!');
       console.log(e);
     }
   });

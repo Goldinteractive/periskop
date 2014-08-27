@@ -1,6 +1,7 @@
 define([
+  'helpers/helpers',
   'layoutmanager'
-], function(SlideComponent) {
+], function(helpers) {
   return Backbone.View.extend({
     el: '#boot-form',
     events: {
@@ -23,7 +24,7 @@ define([
       e.preventDefault();
       // check if the CLIENT_ID is valid
       if (!window.app.CLIENT_ID || !_.isNumber(window.app.CLIENT_ID)) {
-        window.alert('Please insert a valid client id');
+        helpers.alert('Please insert a valid client id');
       } else {
         // the remove event is listened by the BaseLayout.js to start the application
         this.trigger('remove');
