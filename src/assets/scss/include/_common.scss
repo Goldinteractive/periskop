@@ -16,6 +16,12 @@ html {
     font-family: $sansFontFamily;
     background:$bodyBackground;
     font-weight: 200;
+    @include respond-to('tablet') {
+        font-size: $fontSize * 0.8;
+    }
+    @include respond-to('mobile') {
+        font-size: $fontSize * 0.6;
+    }
 }
 
 /*
@@ -81,9 +87,8 @@ textarea {
 html, body {
     position: relative;
     overflow: hidden;
-
-    @include background(url('#{$imagePath}moustache.png') center center no-repeat, linear-gradient(135deg,$goldPink, $goldViolet));
-    // background-size:32px;
+    @include background(url('#{$imagePath}moustache.png') center center  no-repeat, linear-gradient(135deg,$goldPink, $goldViolet));
+    background-size:contain;
     @include square(100%);
 }
 
@@ -145,14 +150,14 @@ h1 {
 
 .form-wrapper {
     background-size: 70px 70px;
-    padding-top: 200px;
+    padding-top: 3em;
     overflow: auto;
     background-image: url('#{$imagePath}bg-pattern.png');
     @include box-sizing(border-box);
 }
 #boot-form {
     input {
-        padding: 1em;
+        padding: 0.6em;
         background: $inputBg;
         border: none;
         border-radius: 5px;
