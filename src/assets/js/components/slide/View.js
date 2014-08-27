@@ -1,8 +1,9 @@
 define([
+  'imagesLoaded',
   'layoutmanager',
   'jquery.fitToParent',
   'helpers/Backbone.ResponsiveView'
-], function() {
+], function(imagesLoaded) {
   return Backbone.ResponsiveView.extend({
     tagName: 'li',
     className: 'slide',
@@ -15,8 +16,9 @@ define([
 
       // notify the image status to the server
       this.$('img')
-        .on('load', this.onImageLoaded)
-        .on('error', this.model.collection.connection.close);
+        .imagesLoaded()
+        .done(this.onImageLoaded)
+        .fail(this.model.collection.connection.close);
     },
     onResize: function() {
       this.$('img').fitToParent();

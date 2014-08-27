@@ -11,6 +11,7 @@ requirejs.config({
     'jquery.fitToParent': '../vendor/bower/jquery-fitToParent/jquery.fittoparent',
     'compiled-templates': 'compiled-templates/templates',
     vex: '../vendor/bower/vex/js/vex',
+    imagesLoaded: '../vendor/bower/imagesloaded/imagesloaded.pkgd',
     'vex.dialog': '../vendor/bower/vex/js/vex.dialog'
   },
   shim: {

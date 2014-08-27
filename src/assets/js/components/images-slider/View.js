@@ -39,6 +39,8 @@ define([
 
       window.clearTimeout(this.timer);
 
+      if (!this.collection.length) return;
+
       var $activeSlide = this.$('.slide.in'),
         $nextSlide;
 
