@@ -15,7 +15,8 @@
     "requirejs": "~2.1.9",
     "handlebars": "~1.3.0",
     "almond": "~0.2.9",
-    "jquery-fitToParent": "https://github.com/Goldinteractive/jquery-fitToParent.git#~0.0.1"
+    "jquery-fitToParent": "https://github.com/Goldinteractive/jquery-fitToParent.git#~0.0.1",
+    "vex": "~2.2.1"
   },
   "resolutions": {
     "jquery": "2.1.1"

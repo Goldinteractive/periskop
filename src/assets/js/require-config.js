@@ -9,7 +9,9 @@ requirejs.config({
     slick: '../vendor/bower/slick-carousel/slick/slick',
     handlebars: '../vendor/bower/handlebars/handlebars.runtime',
     'jquery.fitToParent': '../vendor/bower/jquery-fitToParent/jquery.fittoparent',
-    'compiled-templates': 'compiled-templates/templates'
+    'compiled-templates': 'compiled-templates/templates',
+    vex: '../vendor/vex/js/vex',
+    'vex.dialog': '../vendor/bower/vex/js/vex.dialog'
   },
   shim: {
     backbone: {
@@ -18,6 +20,9 @@ requirejs.config({
     },
     'compiled-templates': ['handlebars'],
     slick: ['jquery'],
+    vex: {
+      deps: ['jquery']
+    },
     'jquery.fitToParent': ['jquery'],
     layoutmanager: ['backbone']
   }

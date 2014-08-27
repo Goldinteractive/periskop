@@ -12,14 +12,16 @@ define([
     },
     afterRender: function() {
       this.onResize();
+
+      // notify the image status to the server
       this.$('img')
-        .on('load', this.imageLoaded)
+        .on('load', this.onImageLoaded)
         .on('error', this.model.collection.connection.close);
     },
     onResize: function() {
       this.$('img').fitToParent();
     },
-    imageLoaded: function() {
+    onImageLoaded: function() {
       console.log('image loaded');
       this.model.collection.sendAction('loaded');
     }
