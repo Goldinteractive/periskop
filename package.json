@@ -4,8 +4,9 @@
   "window": {
     "title": "periskop",
     "show_in_taskbar": true,
-    "kiosk": false,
-    "resizable": true
+    "toolbar": false,
+    "frame": false,
+    "fullscreen": true
   },
   "devDependencies": {
     "grunt": "^0.4.5",

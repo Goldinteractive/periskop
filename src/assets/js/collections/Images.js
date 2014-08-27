@@ -113,7 +113,9 @@ define([
      * @param  { Object } e
      */
     onSocketError: function(e) {
-      helpers.alert('Oups an error occurred!');
+      // helpers.alert('Oups an error occurred!');
+      this.socketOpened = false;
+      setTimeout(this.fetch, 10000);
       console.log(e);
     }
   });
