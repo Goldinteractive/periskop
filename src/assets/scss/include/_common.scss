@@ -82,7 +82,7 @@ html, body {
     position: relative;
     overflow: hidden;
 
-    background: $goldPink url('#{$imagePath}moustache.svg') center center no-repeat;
+    @include background(url('#{$imagePath}moustache.png') center center no-repeat, linear-gradient(135deg,$goldPink, $goldViolet));
     // background-size:32px;
     @include square(100%);
 }
