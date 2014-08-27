@@ -1,62 +1,81 @@
-define(['models/Image', 'backbone'], function(ImageModel) {
-
-  /**
-   * Websocket private helpers
-   */
-  var connection = new WebSocket('ws://178.62.185.145:55555'),
-    socketOpened = false,
-    parseMessage = function(data, channelId) {
-      if (data[1] === channelId) {
-        return data[2];
-      }
-    };
+define([
+  'models/Image',
+  'backbone'
+], function(ImageModel) {
 
   return Backbone.Collection.extend({
     model: ImageModel,
     socketChannel: 'stream',
-    connection: connection,
+    connection: null,
+    socketOpened: false,
+    parseMessage: function(data, channelId) {
+      if (data[1] === channelId) {
+        return data[2];
+      }
+    },
     /**
      * Fetch initially all the images
      */
     initialize: function() {
       _.bindAll(this);
-      this.fetch();
     },
-    parse: function(data) {
-      return data.existing_images;
+    sendAction: function(action, data) {
+      if (this.socketOpened) {
+        console.log(_.extend({
+          action: action
+        }, data || {}));
+        this.connection.send(JSON.stringify([2, 'whatever', this.socketChannel, _.extend({
+          action: action
+        }, data || {})]));
+      }
     },
-    giveMeMore: function() {
-      this.connection.send(JSON.stringify([2, 'periskop', this.socketChannel, {
-        'action': 'givememore'
-      }]));
+    subscribe: function(channel) {
+      if (this.socketOpened) {
+        this.connection.send(JSON.stringify([5, channel]));
+      }
     },
     sync: function(method, model, options) {
-      var _this = this;
-      if (!socketOpened) {
-        connection.onopen = function() {
-          connection.send(JSON.stringify([5, _this.socketChannel]));
-        };
-        connection.onmessage = function(e) {
-          var data = parseMessage(JSON.parse(e.data), _this.socketChannel);
-
-          if (data) {
-            // On the first init we just fetch all the images
-            if (!socketOpened) {
-              options.success(data);
-            } else {
-              // on the other messages we keep adding the new images to the collection
-              _this.add(data);
-            }
-            socketOpened = true;
-          }
-        };
-        connection.onerror = function(e) {
-          alert('Oups an error occurred!');
-          console.log(e);
-        };
+      if (!this.socketOpened) {
+        this.connection = new WebSocket('ws://178.62.185.145:55555');
+        this.connection.onopen = this.onSocketOpened;
+        this.connection.onmessage = this.onSocketMessage;
+        this.connection.onerror = this.onSocketError;
+        this.connection.onclose = this.onSocketError;
       }
+    },
+    onSocketOpened: function(e) {
+      this.socketOpened = true;
+      if (window.app.CLIENT_ID) {
+        console.log(window.app.CLIENT_ID);
 
+        this.sendAction('join', {
+          'number': window.app.CLIENT_ID
+        });
+
+        this.subscribe(this.socketChannel);
+
+        this.trigger('sync');
+
+      } else {
+        console.warn('No client id');
+      }
+    },
+    onSocketMessage: function(e) {
+      var data = this.parseMessage(JSON.parse(e.data), this.socketChannel);
+      console.log(data);
+      if (data) {
+        switch (data.action) {
+          case 'add':
+            this.add(data.image);
+            break;
+          default:
+            this.trigger(data.action);
+        }
+      }
+    },
+    onSocketError: function(e) {
+      alert('Oups an error occurred!');
+      console.log(e);
     }
-
   });
 });

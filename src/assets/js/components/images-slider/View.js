@@ -6,28 +6,14 @@ define([
   return Backbone.View.extend({
     tagName: 'ul',
     className: 'slider',
-    delay: 5,
-    initialized: false,
+    beforeRender: function() {
+      this.collection.fetch();
+    },
     afterRender: function() {
       _.bindAll(this);
       this.listenTo(this.collection, 'add', this.addSlide);
+      this.listenTo(this.collection, 'effect', this.showNextSlide);
       this.collection.each(this.addSlide, this);
-      this.startTimer();
-    },
-    startTimer: function() {
-      this.stopTimer();
-      this.initialized = true;
-      // sync the timer
-      this.nextTick();
-    },
-    nextTick: function() {
-      console.log(new Date().getSeconds(), new Date().getMilliseconds());
-
-      this.timer = window.setTimeout(this.showNextSlide, ((this.delay - new Date().getSeconds() % this.delay) * 1000) - new Date().getMilliseconds());
-    },
-    stopTimer: function() {
-      window.clearTimeout(this.timer);
-      this.timer = false;
     },
     insert: function($root, $el) {
       var $activeSLide = this.$('.slide.active');
@@ -49,33 +35,26 @@ define([
         modelCid: imageModel.cid,
         model: imageModel
       })).render();
-
-      if (this.initialized && !this.timer) {
-        this.nextTick();
-      }
     },
     showNextSlide: function() {
       console.log('show next');
 
-      var $activeSlide = this.$('.slide.active'),
+      var $activeSlide = this.$('.slide.in'),
         $nextSlide;
 
       if (!$activeSlide.length) {
-        $activeSlide = this.$('.slide:first').addClass('active');
-        this.nextTick();
+        $activeSlide = this.$('.slide:first').addClass('in');
         return;
       }
 
       $nextSlide = $activeSlide.next('li');
-
+      $activeSlide.removeClass('in').addClass('out');
       if ($nextSlide.length) {
-        $activeSlide.removeClass('active');
-        $nextSlide.addClass('active');
+
+        $nextSlide.addClass('in');
         this.removeOldSlide($activeSlide);
-        this.nextTick();
       } else {
-        this.stopTimer();
-        this.collection.giveMeMore();
+
       }
 
     },

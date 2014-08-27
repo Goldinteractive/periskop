@@ -1,4 +1,7 @@
 module.exports =
+  options:
+  	livereload:true
+
   js:
     files: ["src/assets/js/**/*.js"]
     tasks: ["jshint"]

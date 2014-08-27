@@ -11,12 +11,14 @@ $experimental-support-for-svg: true;
 
 // Scaffolding
 // -------------------------
+$goldPink: #ff2965;
 $bodyBackground: white;
-$textColor: #3d3d3d;
+$textColor: #fff;
 
+$inputBg: #3d3d3d;
 // Links
 // -------------------------
-$linkColor: #0088cc;
+$linkColor: $goldPink;
 $linkColorHover: darken($linkColor, 15%);
 
 // Typography
@@ -25,7 +27,7 @@ $sansFontFamily: "Helvetica Neue", Helvetica, Arial, sans-serif;
 $serifFontFamily: Georgia, "Times New Roman", Times, serif;
 $monoFontFamily: Monaco, Menlo, Consolas, "Courier New", monospace;
 
-$fontSize: 1em;
+$fontSize: 2em;
 
 //Responsive breakpoints
 // -------------------------

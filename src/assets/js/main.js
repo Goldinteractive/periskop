@@ -17,6 +17,7 @@ require([
         width: 0,
         height: 0
       },
+      CLIENT_ID: null,
       baseLayout: new BaseLayout()
     };
 
