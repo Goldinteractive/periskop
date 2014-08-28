@@ -11,6 +11,9 @@ define([
     initialize: function() {
       _.bindAll(this);
     },
+    afterRender: function() {
+      this.$el.addClass('in');
+    },
     /**
      * Set the global constant CLIENT_ID
      * @param  { Object } e

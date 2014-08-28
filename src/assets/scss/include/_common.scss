@@ -192,6 +192,34 @@ h1 {
     line-height: 0.8em;
 }
 
+.fade {
+    @include transition(opacity 1s);
+    @include opacity(0);
+    &.in {
+        @include opacity(100);
+    }
+}
+
+#loader {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    bottom:20px;
+    right:20px;
+    box-sizing: border-box;
+    border: solid 2px transparent;
+    border-top-color: white;
+    border-left-color: white;
+    border-radius: 50%;
+    @include animation(spinner 400ms linear infinite);
+}
+
+@include keyframes(spinner) {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
 
 
 

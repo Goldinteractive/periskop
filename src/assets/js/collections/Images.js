@@ -101,6 +101,12 @@ define([
             case 'add':
               this.add(data.image);
               break;
+            case 'kill':
+              // Kill a connection without reconnecting it again
+              this.connection.onclose = this.connection.onerror = null;
+              helpers.alert('Jemand hat deinen Spot übernommen!');
+              this.connection.close();
+              break;
             default:
               this.trigger(data.action);
           }

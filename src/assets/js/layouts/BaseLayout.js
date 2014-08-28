@@ -1,9 +1,8 @@
 define([
   'collections/Images',
   'components/images-slider/View',
-  'components/boot-form/View',
   'layoutmanager'
-], function(Images, ImagesSliderComponent, BootFormComponent) {
+], function(Images, ImagesSliderComponent) {
   var imagesCollection = new Images();
   return Backbone.Layout.extend({
     el: 'body',
@@ -14,10 +13,10 @@ define([
       })
     },
     initialize: function() {
-      // Wait until the client has set its id
-      var formComponent = this.insertView('#boot-form', new BootFormComponent());
-      this.listenTo(formComponent, 'remove', this.render);
-      formComponent.render();
+
+    },
+    afterRender: function() {
+      this.$('#loader').remove();
     }
   });
 });
