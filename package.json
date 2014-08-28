@@ -3,10 +3,14 @@
   "nodejs": false,
   "window": {
     "title": "periskop",
-    "show_in_taskbar": true,
-    "toolbar": false,
+    "icon": "icons/periskop.iconset/icon_512x512%402x.png",
+    "toolbar": true,
     "frame": false,
-    "fullscreen": true
+    "fullscreen": false,
+    "show": true
+  },
+  "webkit": {
+    "plugin": false
   },
   "devDependencies": {
     "grunt": "^0.4.5",

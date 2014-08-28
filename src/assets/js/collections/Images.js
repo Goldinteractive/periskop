@@ -8,6 +8,7 @@ define([
     model: ImageModel,
     socketChannel: 'stream',
     connection: null,
+    disconnected: false,
     socketOpened: false,
     /**
      * Get the content of any websocket message
@@ -124,17 +125,26 @@ define([
      * @param  { Object } e
      */
     onSocketError: function(e) {
+      if (this.disconnected) return;
       // helpers.alert('Oups an error occurred!');
       this.socketOpened = false;
       setTimeout(this.fetch, 10000);
       console.log(e);
     },
     /**
+     * Just close the websocket connection
+     */
+    closeConnection: function() {
+      if (this.socketOpened) {
+        this.connection.close();
+      }
+    },
+    /**
      * Kill a connection without reconnecting it again
      * @param { String } message
      */
     forceClose: function(message) {
-      this.connection.onclose = this.connection.onerror = null;
+      this.disconnected = true;
       this.connection.close();
       if (message) {
         helpers.alert(message);

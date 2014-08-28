@@ -40,6 +40,7 @@ node_modules
 # node webkit folders
 cache
 build
+.grunt
 
 # Ignore all the vendor because they will be downloaded using bower
 src/assets/vendor/bower

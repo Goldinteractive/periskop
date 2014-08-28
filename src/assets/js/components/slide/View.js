@@ -28,7 +28,7 @@ define([
       this.$('img')
         .imagesLoaded()
         .done(this.onImageLoaded)
-        .fail(this.model.collection.connection.close);
+        .fail(_.bind(this.model.collection.closeConnection, this.model.collection));
     },
     onResize: function() {
       this.$('img').fitToParent();
