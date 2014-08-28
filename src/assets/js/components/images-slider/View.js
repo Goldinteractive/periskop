@@ -35,11 +35,14 @@ define([
      * Move the new slide in and the old one out
      */
     showNextSlide: function() {
-      console.log('show next');
+      console.log('tick');
 
-      //window.clearTimeout(this.timer);
+      if (!this.collection.length) {
+        console.log('no image to show');
+        return;
+      }
 
-      if (!this.collection.length) return;
+      console.log('Show next');
 
       var $activeSlide = this.$('.slide.in'),
         $nextSlide;
@@ -47,11 +50,9 @@ define([
 
       if (!$activeSlide.length) {
         $activeSlide = this.$('.slide:first').addClass('in');
-        //this.timer = _.delay(this.removeOldSlide, 10000, $activeSlide);
       } else {
 
         $nextSlide = $activeSlide.next('li');
-        //this.timer = _.delay(this.removeOldSlide, 10000, $nextSlide);
 
         if ($nextSlide.length) {
           $nextSlide.addClass('in');
@@ -71,7 +72,7 @@ define([
         return;
       }
       // avoid to trigger the remove event twice
-      window.clearTimeout(this.removeTimer);
+      window.clearTimeout(this.timer);
 
       var _this = this,
         subview = _this.getView({
@@ -80,7 +81,7 @@ define([
 
       $oldSlide.removeClass('in').addClass('out');
       // remove the old image after the out animation is completed
-      this.removeTimer = setTimeout(function() {
+      this.timer = setTimeout(function() {
         subview.remove();
         _this.collection.remove(subview.model);
       }, 1500);

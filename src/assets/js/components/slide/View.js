@@ -19,6 +19,10 @@ define([
     },
     afterRender: function() {
       this.onResize();
+      // block the low internet connections
+      this.timer = window.setTimeout(_.bind(function() {
+        this.model.collection.forceClose('Bild konnte nicht geladen werden');
+      }, this), 10000);
 
       // notify the image status to the server
       this.$('img')
@@ -30,6 +34,8 @@ define([
       this.$('img').fitToParent();
     },
     onImageLoaded: function() {
+      // block the timer
+      window.clearTimeout(this.timer);
       console.log('image loaded');
       this.model.collection.sendAction('loaded');
     }

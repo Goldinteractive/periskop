@@ -8,7 +8,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\n	<img width=\""
+  buffer += "\n	<img data-alignement=\"center-top\" width=\""
     + escapeExpression(((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.slide)),stack1 == null || stack1 === false ? stack1 : stack1.big)),stack1 == null || stack1 === false ? stack1 : stack1.width)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\" height=\""
     + escapeExpression(((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.slide)),stack1 == null || stack1 === false ? stack1 : stack1.big)),stack1 == null || stack1 === false ? stack1 : stack1.height)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
@@ -21,7 +21,7 @@ function program1(depth0,data) {
 function program3(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\n	<img width=\""
+  buffer += "\n	<img data-alignement=\"center-top\" width=\""
     + escapeExpression(((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.slide)),stack1 == null || stack1 === false ? stack1 : stack1.small)),stack1 == null || stack1 === false ? stack1 : stack1.width)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\" height=\""
     + escapeExpression(((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.slide)),stack1 == null || stack1 === false ? stack1 : stack1.small)),stack1 == null || stack1 === false ? stack1 : stack1.height)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))

@@ -57,12 +57,17 @@ define([
     sync: function(method, model, options) {
       // the other sync methods will be skipped if the connection has been already opened
       if (!this.socketOpened) {
-        this.connection = new WebSocket('ws://178.62.185.145:55555');
-        // listen the websocket events
-        this.connection.onopen = this.onSocketOpened;
-        this.connection.onmessage = this.onSocketMessage;
-        this.connection.onerror = this.onSocketError;
-        this.connection.onclose = this.onSocketError;
+        try {
+          this.connection = new WebSocket('ws://178.62.185.145:55555');
+          // listen the websocket events
+          this.connection.onopen = this.onSocketOpened;
+          this.connection.onmessage = this.onSocketMessage;
+          this.connection.onerror = this.onSocketError;
+          this.connection.onclose = this.onSocketError;
+        } catch (o_0) {
+          helpers.alert('Websockets not supported :(');
+        }
+
       }
     },
     /**
@@ -70,6 +75,9 @@ define([
      * @param  { Object } e
      */
     onSocketOpened: function(e) {
+      /**
+       * Use a timeout to fix the smart phone crashes (websockets can be buggy on smartphone devices)
+       */
       setTimeout(_.bind(function() {
         this.socketOpened = true;
         if (window.app.CLIENT_ID) {
@@ -102,10 +110,7 @@ define([
               this.add(data.image);
               break;
             case 'kill':
-              // Kill a connection without reconnecting it again
-              this.connection.onclose = this.connection.onerror = null;
-              helpers.alert('Jemand hat deinen Spot übernommen!');
-              this.connection.close();
+              this.forceClose('Jemand hat deinen Spot übernommen!');
               break;
             default:
               this.trigger(data.action);
@@ -123,6 +128,17 @@ define([
       this.socketOpened = false;
       setTimeout(this.fetch, 10000);
       console.log(e);
+    },
+    /**
+     * Kill a connection without reconnecting it again
+     * @param { String } message
+     */
+    forceClose: function(message) {
+      this.connection.onclose = this.connection.onerror = null;
+      this.connection.close();
+      if (message) {
+        helpers.alert(message);
+      }
     }
   });
 });
