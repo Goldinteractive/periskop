@@ -20,7 +20,7 @@ html {
         font-size: $fontSize * 0.8;
     }
     @include respond-to('mobile') {
-        font-size: $fontSize * 0.6;
+        font-size: $fontSize * 0.5;
     }
 }
 
@@ -130,7 +130,7 @@ a {
     @include square(100%);
 }
 .slide {
-    @include transition(transform 0.5s);
+    @include transition(transform 1.2s $easeInOutCirc);
     @include transform(translateX(-100%));
     &.in {
         @include transform(translateX(0))
@@ -150,7 +150,10 @@ h1 {
 
 .form-wrapper {
     background-size: 70px 70px;
-    padding-top: 3em;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    -webkit-align-items: center;
     overflow: auto;
     background-image: url('#{$imagePath}bg-pattern.png');
     @include box-sizing(border-box);
@@ -172,6 +175,11 @@ h1 {
                 background: white;
                 color:$goldPink;
             }
+        }
+    }
+    img {
+        @include respond-to('mobile') {
+            width: 30%;
         }
     }
     label {

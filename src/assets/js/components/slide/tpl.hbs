@@ -1,1 +1,5 @@
-<img width="{{width}}" height="{{height}}" src="{{url}}" />
+{{#compare viewport.width '>=' 600 }}
+	<img width="{{slide.big.width}}" height="{{slide.big.height}}" src="{{slide.big.url}}" />
+{{else}}
+	<img width="{{slide.small.width}}" height="{{slide.small.height}}" src="{{slide.small.url}}" />
+{{/compare}}

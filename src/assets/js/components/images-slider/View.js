@@ -37,7 +37,7 @@ define([
     showNextSlide: function() {
       console.log('show next');
 
-      window.clearTimeout(this.timer);
+      //window.clearTimeout(this.timer);
 
       if (!this.collection.length) return;
 
@@ -47,11 +47,11 @@ define([
 
       if (!$activeSlide.length) {
         $activeSlide = this.$('.slide:first').addClass('in');
-        this.timer = _.delay(this.removeOldSlide, 10000, $activeSlide);
+        //this.timer = _.delay(this.removeOldSlide, 10000, $activeSlide);
       } else {
 
         $nextSlide = $activeSlide.next('li');
-        this.timer = _.delay(this.removeOldSlide, 10000, $nextSlide);
+        //this.timer = _.delay(this.removeOldSlide, 10000, $nextSlide);
 
         if ($nextSlide.length) {
           $nextSlide.addClass('in');
@@ -67,7 +67,11 @@ define([
      */
     removeOldSlide: function($oldSlide) {
 
-      if (!$oldSlide ||  !$oldSlide.length) return;
+      if (!$oldSlide ||  !$oldSlide.length) {
+        return;
+      }
+      // avoid to trigger the remove event twice
+      window.clearTimeout(this.removeTimer);
 
       var _this = this,
         subview = _this.getView({
@@ -76,10 +80,10 @@ define([
 
       $oldSlide.removeClass('in').addClass('out');
       // remove the old image after the out animation is completed
-      setTimeout(function() {
+      this.removeTimer = setTimeout(function() {
         subview.remove();
         _this.collection.remove(subview.model);
-      }, 1000);
+      }, 1500);
     }
   });
 });

@@ -11,6 +11,12 @@ define([
     initialize: function() {
       _.bindAll(this);
     },
+    serialize: function() {
+      return {
+        slide: this.model.toJSON(),
+        viewport: window.app.viewport
+      };
+    },
     afterRender: function() {
       this.onResize();
 

@@ -5,6 +5,7 @@
 
 require([
   'handlebars',
+  'helpers/handlebars.helpers',
   'backbone',
   'layoutmanager',
   'compiled-templates'

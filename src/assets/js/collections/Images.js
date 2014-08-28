@@ -32,7 +32,7 @@ define([
      */
     sendAction: function(action, data) {
       if (this.socketOpened) {
-        var message = [2, 'I love 💩', this.socketChannel, _.extend({
+        var message = [2, 'We come in peace! ☮', this.socketChannel, _.extend({
           action: action
         }, data)];
 
