@@ -47,18 +47,20 @@ define([
       var $activeSlide = this.$('.slide.in'),
         $nextSlide;
 
+      _.delay(_.bind(function() {
+        if (!$activeSlide.length) {
+          $activeSlide = this.$('.slide:first').addClass('in');
+        } else {
 
-      if (!$activeSlide.length) {
-        $activeSlide = this.$('.slide:first').addClass('in');
-      } else {
+          $nextSlide = $activeSlide.next('li');
 
-        $nextSlide = $activeSlide.next('li');
-
-        if ($nextSlide.length) {
-          $nextSlide.addClass('in');
+          if ($nextSlide.length) {
+            $nextSlide.addClass('in');
+          }
+          this.removeOldSlide($activeSlide);
         }
-        this.removeOldSlide($activeSlide);
-      }
+      }, this), 100);
+
 
 
     },

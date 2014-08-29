@@ -3,10 +3,9 @@
   "nodejs": false,
   "window": {
     "title": "periskop",
-    "icon": "icons/periskop.iconset/icon_512x512%402x.png",
     "toolbar": true,
     "frame": false,
-    "fullscreen": false,
+    "fullscreen": true,
     "show": true
   },
   "webkit": {
